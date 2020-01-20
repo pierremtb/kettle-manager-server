@@ -12,7 +12,7 @@ app.config["DEBUG"] = True
 temp_tfl_path = os.path.join("temp", "tfl_model.h5")
 
 def get_model_path(device_id):
-    return os.path.join("data", device_id)
+    return os.path.join("data", str(device_id))
 
 @app.route('/', methods=['GET'])
 def home():
