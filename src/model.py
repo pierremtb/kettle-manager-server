@@ -1,5 +1,7 @@
 import os
 import tensorflow as tf
+import numpy as np
+
 
 class BoilModel:
     def __init__(self, model_path):
@@ -35,10 +37,28 @@ class BoilModel:
     def train(self, X, y):
         if self.model is None:
             raise FileNotFoundError("Model isn't defined!")
-        self.model.fit(X, y)
+        self.model.fit(X, y, epochs=1000)
         self.save()
 
     def predict(self, X):
         if self.model is None:
             raise FileNotFoundError("Model isn't defined!")
         return self.model.predict(X)
+
+if __name__ == "__main__":
+    import matplotlib.pyplot as plt
+
+    device_id = 0
+    Xy = np.loadtxt("data/out1.csv", delimiter=",")
+    X = Xy[:, 0].reshape(-1, 1)
+    y = Xy[:, 1].reshape(-1, 1)
+    model_path = os.path.join("data", str(device_id))
+    boil_model = BoilModel(model_path)
+    boil_model.train(X, y)
+
+    x_pred = np.linspace(0, 600, 100)
+    y_pred = boil_model.predict(x_pred)
+    plt.plot(x_pred, y_pred)
+    plt.scatter(X, y)
+    plt.show()
+    
