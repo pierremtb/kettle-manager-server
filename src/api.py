@@ -23,8 +23,8 @@ def post_data():
     device_id = request.args["device_id"]
     content = request.files["out.csv"]
     Xy = np.loadtxt(content, delimiter=",")
-    X = Xy[:, 0].reshape(-1, 1)
-    y = Xy[:, 1].reshape(-1, 1)
+    X = Xy[:, 0:2]
+    y = Xy[:, 2].reshape(-1, 1)
     model_path = get_model_path(device_id)
     boil_model = BoilModel(model_path)
     boil_model.train(X, y)

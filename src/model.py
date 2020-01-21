@@ -7,7 +7,7 @@ class BoilModel:
     def __init__(self, model_path):
         self.model_path = model_path
         self.model = None
-        self.input_shape = (1,)
+        self.input_shape = (2,)
         self.load()
 
     def create_model(self):
